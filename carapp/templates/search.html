@@ -1,0 +1,184 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %}
+{% load bootstrap4 %}
+{% block content %}
+{% load static %}
+{% block styles %}
+{{block.super}}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+
+
+{% endblock %}
+<br>
+<br>
+<br>
+<div class="container" style="font-family: 'PT Serif', serif;">
+
+    <div class="row">
+
+        {% if images%}
+        <br>
+        <br>
+        <h3>Found {{ images|length }} results of searched title <b>{{message}}</b></h3>
+        {% else %}
+        <br>
+        <br>
+        <h3 style="font-weight:bolder;text-align:center;">Oops!!{{message}}</h3>
+        {% endif %}
+
+    </div>
+    <br>
+
+
+    {% if images %}
+    {% for image in images %}
+    <div class="container">
+        <div class="row">
+            <h4 style="font-weight:bolder;">{{image.id}}) {{image.make}}({{image.model}})</h4>
+            <div class="card" style="width:100% !important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <img src="{{image.image.url}}" class="img-responsive" style="height:600px;width: 100% !important;position: center;size: cover;">
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="card" style="width:50% !important;box-shadow: 0 12px 10px 0 rgba(0, 0, 0, 0.2), 0 15px 23px 0 rgba(0, 0, 0, 0.06);padding-left: 20px;">
+            <br>
+            <li class="list-inline-item">
+                <a href=" {% url 'like' image_id=image.id %}">
+                    <i class="far fa-heart" style="color: white !important;font-size: 30px;opacity: 0.7;" aria-hidden="true"></i></a>
+                <p>({{image.count_likes}}) likes</p>
+                <a href=" {% url 'comment' image_id=image.id %}">
+                    <i class="fas fa-comments" style="color: whitesmoke !important;font-size: 30px;opacity: 0.7;"
+                        aria-hidden="true"></i></a>
+                <p>({{image.comment.count}}) comments</p>
+                <p><a href="#comment">Comment on this image :</a></p>
+            </li>
+        </div>
+        <br>
+        <div class="row">
+            <div class="card" style="width:100% !important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <br>
+                    <h5><b>Name:</b> {{image.name}}</h5>
+                    <br>
+                    <h5><b>Model:</b> {{image.model}}</h5>
+                    <br>
+                    <h5><b>Make:</b> {{image.make}}</h5>
+                    <br>
+                    <h5><b>Year:</b> {{image.year}}</h5>
+                    <br>
+                    <h5><b>Location:</b> {{image.location}}</h5>
+                    <br>
+                    <h5><b>Description: </b> {{image.description}}</h5>
+                    <br>
+                    <h5><b>Engine Type: </b> {{image.engine_type}}</h5>
+                    <br>
+                    <h5><b>Engine Rating:</b> {{image.engine_rating}}</h5>
+                    <br>
+                    <h5><b>Engine Power:</b> {{image.engine_power}}</h5>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <div class="card" style="width:100% !important;box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.8), 0 10px 26px 0 rgba(0, 0, 0, 0.26);padding-left: 20px;">
+            <br>
+            <h4 style="color: whitesmoke;text-decoration-line: underline;">Car Rating Criteria</h4>
+            <h5>{{ image.rating.count }} <h5 style="color: green;">a)Engine</h5> average = {{ image.average_engine |
+                floatformat }} </h5>
+
+            <h5>{{ image.rating.count }} <h5 style="color: green;">b)Usability</h5> average = {{
+                image.average_usability | floatformat }} </h5>
+
+            <h5>{{ image.rating.count }} <h5 style="color: green;">c)Body</h5> average = {{ image.average_body |
+                floatformat }}</h5>
+            <br><br>
+
+            <div class="col-xs-3 col-sm-6 col-md-4 col-lg-4">
+                <h5>a)Rate By Engine</h5>
+
+
+
+                <form action="{%url 'rate_engine' image_id=image.id %}" method="POST">
+                    {%csrf_token%}
+                    {% bootstrap_form form layout='inline' %}
+                    <input type="submit" class="btn-md btn btn-success" style="width:50% !important;" value="Rate">
+                </form>
+                <br>
+                <h5>b)Rate By Usability</h5>
+                <form action="{%url 'rate_usability' image_id=image.id %}" method="POST">
+                    {%csrf_token%}
+                    {% bootstrap_form form layout='inline' %}
+                    <input type="submit" class="btn-md btn btn-success" style="width:50% !important;" value="Rate">
+                </form>
+
+                <h5>c)Rate By Body</h5>
+                <form action="{%url 'rate_body' image_id=image.id %}" method="POST" style="width:100%;">
+                    {%csrf_token%}
+                    {% bootstrap_form form layout='inline' %}
+                    <input type="submit" class="btn-md btn btn-success" style="width:50% !important;" value="Rate">
+                </form>
+                <br>
+
+
+            </div>
+        </div>
+        <br>
+        <div class="card" style="width:100% !important;box-shadow: 0 12px 10px 0 rgba(0, 0, 0, 0.2), 0 15px 23px 0 rgba(0, 0, 0, 0.06);padding-left: 20px;">
+            <br>
+            <h4 class="display"><strong>Comments</strong> </h4>
+            <br>
+            <br>
+            <a class="view-more"></a>
+            {% for comment in comments %}
+            {% if comment.image_id == image.id %}
+            <li class="comments"> <b><i class="fas fa-user"></i> &nbsp;{{ comment.user.username }}</b> :
+                <span class="comment">{{ comment.comment }}</span>
+            </li>
+            <br>
+            {% else %}
+            {% endif %}
+            {% endfor %}
+
+            <br>
+            <br>
+            <div class="comment-input-wrapper">
+                <form action="{% url 'comment' image_id=image.id %}" method="post" id="comment">
+                    {% csrf_token %}
+                    <input class="add-comment" style="height: 80px !important;width: 50% !important;" name="comment" id="comment{{image.id}}"
+                        type="text" placeholder="Comment on this image....">
+                </form>
+                <br>
+                <br>
+            </div>
+            <div class="hidden-data {{ image.pk }}" style="display: none;">
+                <span class="image-pk">{{ image.pk }}</span>
+            </div>
+
+
+            </h5>
+        </div>
+        <br>
+        <br>
+        <br>
+
+
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</div>
+<style>
+</style>
+{% endblock %}
+{% block scripts %} {{block.super}}
+
+{% endblock %}

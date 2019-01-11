@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+{{form.media}}
+<br>
+<br>
+<br>
+<br>
+<div class="container" style="font-family:'PT Serif', serif;
+">
+    <form action="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data" style="font-weight:bold !important;">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" class="btn btn-outline-success btn-md" value="Post">
+    </form>
+</div>
+{% endblock %}

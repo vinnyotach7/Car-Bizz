@@ -1,0 +1,89 @@
+{% extends 'registration/base.html'%}
+{%load static%}
+{% load bootstrap3 %}
+{% block content %}
+<br>
+<br>
+<br>
+
+<body>
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <!-- Empty div -->
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {% if form.errors %}
+                <p> Password or Username is incorrect </p>
+                {% endif %}
+                <div class="well" style="width:100% !important;border: solid #333;">
+                    <div class="panel-header">
+
+                        <h2 style="text-align:center;font-size: 40px;">Sign up</h2>
+                    </div>
+                    <hr>
+                    <form action="/accounts/register/" method="post" style="text-align:center;font-size: 17px;">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <p>
+                            {{ field.label_tag }}<br>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                            <small style="display: none">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                        </p>
+                        {% endfor %}
+                        <button type="submit" class="btn-lg btn btn-success" style="width:60%;">Sign up</button>
+                        <br>
+                        <br>
+                        <center>
+                            <p class="have">Have an account? <a href="/accounts/login">Log in</a> </p>
+                        </center>
+                    </form>
+                    <br>
+                </div>
+
+            </div>
+            <!-- empty div -->
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+
+
+</body>
+<style>
+    body {
+        background: rgb(243, 243, 243);
+        font-family: 'Lato', sans-serif;
+    }
+
+    #id_username {
+        width: 85%;
+        border-radius: 2px;
+    }
+
+    #id_email {
+        width: 85%;
+        border-radius: 2px;
+    }
+
+    #id_password1 {
+        width: 85%;
+        border-radius: 2px;
+    }
+
+    #id_password2 {
+        width: 85%;
+        border-radius: 2px !important;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load bootstrap4 %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+
+<body>
+    <div class="container" style="background-image: url(http://files.wallpapersfine.com/vehicle/muscle_cars.jpg)">
+        <div class="row">
+            <div class="col-md-8">
+                <form action="{% url 'upload_image' %}" method="POST" enctype="multipart/form-data" style="font-weight:bold !important;">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="submit" class="btn btn-success btn-md" value="POST">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        font-family: 'PT Serif', serif;
+    }
+</style>
+{{ form.media }}
+{% endblock %}

@@ -1,0 +1,131 @@
+{%extends 'base.html' %}
+{% load bootstrap3 %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+{% block styles%}
+{{block.super}}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+
+<body>
+    <div class="container " style="  font-family:'PT Serif', serif;">
+        <div class="col-md-4">
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                {% if profiles.profile_pic %}
+                <br>
+                <br>
+                <figure style="font-size: 10px !important;">
+                    <img src="{{profiles.profile_pic.url}}" class="img-circle" style="width:300px;border-radius: 50%;"
+                        id="me">
+
+
+                </figure>
+                {%else%}
+                <figure>
+                    <img src="/static/photos/avatar.png" class="img-circle">
+                    <figcaption>{{profiles.user.username}}</figcaption>
+                </figure>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                <br>
+                <br>
+                <figcaption style="font-size:30px;"><i class="fas fa-user"></i>&nbsp;&nbsp;{{profiles.user.username}}
+                    <a href="{% url 'edit_profile' %}" class="btn-sm btn btn-success">
+                        <p>Edit Profile&nbsp;<i class="fas fa-user-edit"></i></p>
+                    </a></figcaption>
+                <br>
+                <blockquote style="font-size:20px;">{{profiles.bio}}</blockquote>
+                <br>
+                <span style="font-size:19px;"><i class="fas fa-phone">&nbsp;{{profiles.contact}}</i></span>
+                <br>
+                <br>
+                <span style="font-size:19px;"><i class="fas fa-envelope">&nbsp;{{profiles.user.email}}</i></span>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <h3 style="font-weight:bold;font-family: 'Lato', sans-serif;text-align: center;">Vehicles Posted :</h3>
+        <br>
+        <div class="row">
+            {% for image in images %}
+            <div class="col-xs-12 col-sm-6 col-md-4 projects">
+
+                <div class="thumbnail img-container" style="width:100% !important;height: 100%;" data-toggle="modal"
+                    data-target="#exampleModalCenter{{image.id}}">
+                    <div class="thumbnail-header">
+                        <figcaption>{{image.make}}({{image.model}})</figcaption>
+                    </div>
+                    <a href="/image/{{image.id}}"><img src="{{image.image.url}}" class="img-responsive" style="height:100%;width: 100% !important;position: center;size: cover;"></a>
+
+
+
+                </div>
+                <br>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+
+</body>
+<style>
+    body {
+        background-color: #333;
+    }
+
+    .img-container {
+        overflow: hidden;
+        border: 10px solid #3e3e3e;
+        box-shadow: 0 1px 2px rgb(20, 20, 20);
+        position: relative;
+    }
+
+    .img-container img {
+        transition: .5s;
+        background-color: #000;
+        opacity: 1;
+    }
+
+    .img-container figcaption {
+        color: white;
+        font-family: 'PT Serif', serif;
+        text-transform: uppercase;
+        display: block;
+        text-align: center;
+        position: absolute;
+        width: 200px;
+        top: -40px;
+        background-color: rgba(30, 30, 30, .5);
+        width: 100%;
+        border-bottom: 1px solid #444;
+        transition: .3s;
+    }
+
+    .img-container:hover figcaption {
+        top: 20px;
+    }
+
+    .img-container:hover img {
+        transform: scale(1.4);
+        opacity: .4;
+    }
+</style>
+
+{% endblock%}

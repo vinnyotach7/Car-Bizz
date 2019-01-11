@@ -1,0 +1,75 @@
+{%extends "registration/base.html"%}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block styles %}
+{{block.super}}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Empty div -->
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {% if form.errors %}
+                <p> Password or Username is incorrect </p>
+                {% endif %}
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="col-xs-12 col-sm-12 col-md-12 ">
+                    <div class="well" style="width:100% !important;border: solid#333;">
+
+                        <div class="well-heading">
+                            <h2 class="text-center" style="text-align:center;font-size: 40px;">Sign In</h2>
+                        </div>
+                        <hr>
+                        <div class="panel-body">
+
+                            <form action="/accounts/login/" method="post" style="text-align:center;font-size: 17px;">
+                                {% csrf_token %}
+                                {% bootstrap_form form%}
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success btn-lg" value="Login">
+                                </div>
+                                <br>
+                                <p class="have">Don't have an account? <a href="/accounts/register">Sign Up</a> </p>
+
+                                <input type="hidden" name="next" value="{{next}}">
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- empty div -->
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+</body>
+<style>
+    body {
+        background: rgb(243, 243, 243);
+        font-family: 'Lato', sans-serif;
+    }
+
+    .btn {
+        width: 60%;
+    }
+</style>
+
+{% endblock %}

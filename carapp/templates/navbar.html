@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps+Lora" rel="stylesheet">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar">
+    <a class="navbar-brand head"  href="/" id="gallery"><img src="https://i.pinimg.com/originals/68/29/29/68292919de76b5f4866c52c37df1abc6.jpg" class="img-responsive" style="width:50px;height: 50px;">&nbsp;<b>CarPoolers</b></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link locations" href="{% url 'upload_image' %}" style="color:#ece3d1;">&nbsp;Upload
+                driver/rider&nbsp;<i class="fas fa-upload"></i><span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link locations" href="/user/{{user.id}}" style="color:#ece3d1;">&nbsp;Profile&nbsp;<i
+                        class="fas fa-user-circle"></i><span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown dropdown">
+                <a class="nav-link dropdown-toggle locations" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="color:#ece3d1;">
+                    Accounts&nbsp;<i class="fas fa-user-cog"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background:rgb(32, 32, 32)">
+                    <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+                    <a class="dropdown-item" href="/logout/">Logout</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link locations" style="padding-left: 800px !important;color:#ece3d1;" href="/user/{{user.id}}"><i
+                        class="fas fa-user"></i>&nbsp;{{user.username}}&nbsp;<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Nunito|Oleo+Script+Swash+Caps');
+
+    .navbar {
+        font-family: 'PT Serif', serif;
+        width: 100%;
+        font-size: 20px;
+        position: fixed;
+        z-index: 1;
+        margin-top: 0% !important;
+
+    }
+
+    #gallery {
+        font-size: 30px;
+
+    }
+
+    .dropdown-item {
+        color: #ece3d1;
+    }
+
+    .head {
+        color: #ece3d1 !important;
+    }
+
+    .head:hover {
+        color: green !important;
+    }
+
+    .categories:hover {
+        color: green !important;
+    }
+
+    .locations:hover {
+        color: green !important;
+    }
+</style>
