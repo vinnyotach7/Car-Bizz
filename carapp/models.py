@@ -3,7 +3,7 @@ import datetime as dt
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import numpy as np
+# import numpy as np
 
 
 class Driver(models.Model):
